@@ -1,15 +1,12 @@
-// 100-createIteratorObject.js
-
 export default function createIteratorObject(report) {
-  // a generator function to iterate over employees
-  function* employeeIterator() {
-    for (const department in report.allEmployees) {
-      for (const employee of report.allEmployees[department]) {
-        yield employee;
+  const departments = Object.values(report.allEmployees);
+  let index = 0;
+  return {
+    next() {
+      if (index < departments.length) {
+        return { value: departments[index++], done: false };
       }
-    }
-  }
-  
-  return employeeIterator();
+      return { done: true };
+    },
+  };
 }
-
